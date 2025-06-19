@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des tâches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #1e90ff;
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .container {
+            padding: 20px;
+        }
+        footer {
+            background-color: #eee;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div><strong>Mon API Symfony</strong></div>
+        <div>
+            <a href="{{ path('task_list') }}">Accueil</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Liste des tâches</h1>
+
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <strong>{{ task.title }}</strong><br>
+                    {{ task.description }}<br>
+                    Statut : {{ task.status }}
+                </li>
+            {% else %}
+                <li>Aucune tâche</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <h2>Ajouter une tâche</h2>
+        <form action="{{ path('task_add') }}" method="post">
+            <input type="text" name="title" placeholder="Titre" required><br>
+            <textarea name="description" placeholder="Description" required></textarea><br>
+            <select name="status">
+                <option value="pending">En attente</option>
+                <option value="done">Terminée</option>
+            </select><br>
+            <button type="submit">Créer</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; {{ "now"|date("Y") }} - API Symfony - Tous droits réservés
+    </footer>
+
+</body>
+</html>
